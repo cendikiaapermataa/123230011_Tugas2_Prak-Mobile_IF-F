@@ -1,18 +1,14 @@
-import 'package:flutter/material.dart'; // Tambahan untuk warna Snackbar
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/product.dart';
 
 class CartController extends GetxController {
-  // Menggunakan Map untuk menyimpan produk beserta jumlah (quantity)-nya
-  var cartItems = <Product, int>{}.obs;
+  // KRITERIA 1: Menyimpan daftar produk di keranjang menggunakan RxList
+  var cartItems = <Product>[].obs;
 
-  // Method untuk menambah produk (jika sudah ada, quantity bertambah)
+  // Method untuk menambah produk
   void addToCart(Product product) {
-    if (cartItems.containsKey(product)) {
-      cartItems[product] = cartItems[product]! + 1; // Tambah quantity
-    } else {
-      cartItems[product] = 1; // Masukkan barang baru dengan quantity 1
-    }
+    cartItems.add(product);
     Get.snackbar(
       "Berhasil",
       "Item ditambahkan",
@@ -21,21 +17,10 @@ class CartController extends GetxController {
     );
   }
 
-  // Method untuk mengurangi quantity
-  void reduceItem(Product product) {
-    if (cartItems.containsKey(product) && cartItems[product] == 1) {
-      cartItems.remove(
-        product,
-      ); // Jika sisa 1 dan dikurangi, hapus dari keranjang
-    } else if (cartItems.containsKey(product)) {
-      cartItems[product] = cartItems[product]! - 1; // Kurangi quantity
-    }
-  }
-
-  // Method untuk menghapus produk sepenuhnya dari keranjang
+  // Method untuk menghapus produk dari keranjang
   void removeFromCart(Product product) {
     cartItems.remove(product);
-    // Tambahan feedback visual saat item dihapus
+    // Feedback visual saat item dihapus
     Get.snackbar(
       "Dihapus",
       "${product.title} telah dihapus dari keranjang",
@@ -46,16 +31,13 @@ class CartController extends GetxController {
     );
   }
 
-  // Menghitung total harga (Harga Produk x Kuantitas)
+  // Method untuk menghitung total harga menggunakan fold pada List
   double get totalPrice {
-    return cartItems.entries.fold(
-      0,
-      (sum, entry) => sum + ((entry.key.price ?? 0) * entry.value),
-    );
+    return cartItems.fold(0, (sum, item) => sum + (item.price ?? 0));
   }
 
   // Menghitung total seluruh jumlah item untuk ditampilkan di Badge
   int get totalItems {
-    return cartItems.values.fold(0, (sum, quantity) => sum + quantity);
+    return cartItems.length;
   }
 }

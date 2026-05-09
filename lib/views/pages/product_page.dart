@@ -51,28 +51,24 @@ class ProductPage extends GetView<ProductController> {
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Obx(() {
-          // PERBAIKAN 1: Hapus .value karena isLoading sudah bool
           if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.blueGrey),
             );
           }
           return GridView.builder(
-            // PERBAIKAN 2: Ganti productList menjadi products
             itemCount: controller.products.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              childAspectRatio:
-                  0.55, // Disesuaikan sedikit agar muat tombol tambah
+              childAspectRatio: 0.55, // Disesuaikan sedikit agar muat tombol
             ),
             itemBuilder: (context, index) {
               final product = controller.products[index];
               return Column(
                 children: [
                   Expanded(
-                    // PERBAIKAN 3: Tambahkan parameter onTap
                     child: ProductCard(
                       product: product,
                       onTap: () {
@@ -93,8 +89,12 @@ class ProductPage extends GetView<ProductController> {
                             Colors.blueGrey, // Disesuaikan dengan tema card
                       ),
                       child: const Text(
-                        "Tambah",
-                        style: TextStyle(color: Colors.white),
+                        "Tambahkan ke Keranjang", // Teks disesuaikan persis dengan soal
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ), // Font dikecilkan sedikit agar rapi
                       ),
                     ),
                   ),
