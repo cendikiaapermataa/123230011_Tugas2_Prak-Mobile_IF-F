@@ -14,11 +14,10 @@ class CartPage extends GetView<CartController> {
           return const Center(child: Text("Keranjang masih kosong"));
         }
 
-        // Membaca item langsung dari RxList
+        //baca item langsung dari RxList
         return ListView.builder(
           itemCount: controller.cartItems.length,
           itemBuilder: (context, index) {
-            // Karena menggunakan List, kita ambil datanya dengan indeks langsung
             final product = controller.cartItems[index];
 
             return Card(
@@ -27,8 +26,6 @@ class CartPage extends GetView<CartController> {
                 leading: const Icon(Icons.shopping_bag_outlined),
                 title: Text(product.title ?? 'No Name'),
                 subtitle: Text('\$${product.price}'),
-
-                // Hanya menyisakan tombol hapus, tidak ada tambah/kurang
                 trailing: IconButton(
                   icon: const Icon(Icons.delete_outline, color: Colors.red),
                   onPressed: () {
@@ -39,10 +36,10 @@ class CartPage extends GetView<CartController> {
                       textConfirm: "Ya, Hapus",
                       confirmTextColor: Colors.white,
                       onConfirm: () {
-                        Get.back(); // 1. Tutup dialognya TERLEBIH DAHULU
+                        Get.back(); 
                         controller.removeFromCart(
                           product,
-                        ); // 2. Hapus data dan munculkan snackbar
+                        ); 
                       },
                       textCancel: "Batal",
                     );

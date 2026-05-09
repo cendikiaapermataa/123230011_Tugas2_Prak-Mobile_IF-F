@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/product_controller.dart';
-import '../../controllers/cart_controller.dart'; // Import CartController
+import '../../controllers/cart_controller.dart';
 import '../../views/widgets/product_card.dart';
 
 class ProductPage extends GetView<ProductController> {
@@ -9,21 +9,19 @@ class ProductPage extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-    // Inisialisasi CartController agar bisa digunakan di halaman ini
     final cartController = Get.put(CartController());
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Home Page'),
         actions: [
-          // MEMENUHI KRITERIA 3: Badge jumlah item menggunakan Obx
           Stack(
             alignment: Alignment.center,
             children: [
               IconButton(
                 icon: const Icon(Icons.shopping_cart),
                 onPressed: () {
-                  Get.toNamed('/cart'); // Route ke CartPage
+                  Get.toNamed('/cart');
                 },
               ),
               Positioned(
@@ -62,7 +60,7 @@ class ProductPage extends GetView<ProductController> {
               crossAxisCount: 2,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              childAspectRatio: 0.55, // Disesuaikan sedikit agar muat tombol
+              childAspectRatio: 0.55,
             ),
             itemBuilder: (context, index) {
               final product = controller.products[index];
@@ -77,7 +75,6 @@ class ProductPage extends GetView<ProductController> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  // MEMENUHI KRITERIA 2: Button Tambahkan ke Keranjang
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -85,16 +82,12 @@ class ProductPage extends GetView<ProductController> {
                         cartController.addToCart(product);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.blueGrey, // Disesuaikan dengan tema card
+                        backgroundColor: Colors.blueGrey,
                       ),
                       child: const Text(
-                        "Tambahkan ke Keranjang", // Teks disesuaikan persis dengan soal
+                        "Tambahkan ke Keranjang",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ), // Font dikecilkan sedikit agar rapi
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                   ),

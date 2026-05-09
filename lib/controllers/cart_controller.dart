@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import '../models/product.dart';
 
 class CartController extends GetxController {
-  // KRITERIA 1: Menyimpan daftar produk di keranjang menggunakan RxList
   var cartItems = <Product>[].obs;
 
-  // Method untuk menambah produk
+  //method untuk nambah produk
   void addToCart(Product product) {
     cartItems.add(product);
     Get.snackbar(
@@ -17,10 +16,9 @@ class CartController extends GetxController {
     );
   }
 
-  // Method untuk menghapus produk dari keranjang
+  //method untuk ngapus produk dari keranjang
   void removeFromCart(Product product) {
     cartItems.remove(product);
-    // Feedback visual saat item dihapus
     Get.snackbar(
       "Dihapus",
       "${product.title} telah dihapus dari keranjang",
@@ -31,12 +29,12 @@ class CartController extends GetxController {
     );
   }
 
-  // Method untuk menghitung total harga menggunakan fold pada List
+  //method untuk ngitung total harga list
   double get totalPrice {
     return cartItems.fold(0, (sum, item) => sum + (item.price ?? 0));
   }
 
-  // Menghitung total seluruh jumlah item untuk ditampilkan di Badge
+  //ngitung total seluruh jumlah item untuk ditampilin di badge
   int get totalItems {
     return cartItems.length;
   }
